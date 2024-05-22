@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sa-sdk-javascript@1.26.5"></script>
+<script>
+    var sensors = window['sensorsDataAnalytic201505'];
+    sensors.init({
+      show_log: true,
+      // server_url: 'https://datasink.sensorsdata.tw/sa?project=id_3', // sensorsdata.tw 环境
+      //server_url: 'https://cdp.data-di.com/sa?project=default',// ma.data-di.com 环境
+      // server_url: 'https://cdp.data-di.com/sa?project=taibei_uat',// ma.data-di.com 环境
+      //server_url: 'https://cdp.data-di.com/sa?project=nanshanlife_poc',// ma.data-di.com 环境
+      server_url: 'https://cdp.data-di.com/sa.gif?project=idm3_test',// ma.data-di.com 环境
+      // 单页面配置，默认开启，若页面中有锚点设计，需要将该配置删除，否则触发锚点会多触发 $pageview 事件
+      is_track_single_page: false,
+      use_client_time: true,
+      send_type: 'beacon',
+      heatmap: {
+        //是否开启点击图，default 表示开启，自动采集 $WebClick 事件，可以设置 'not_collect' 表示关闭。
+        clickmap: 'default',
+        //是否开启触达注意力图，not_collect 表示关闭，不会自动采集 $WebStay 事件，可以设置 'default' 表示开启。
+        scroll_notice_map: 'not_collect'
+      }
+    });
+    // 鍛鍊追蹤：https://ma.data-di.com/shopping/shopping?identify={"fieldName":"$identity_xxxx","fieldValue":"tom","idmType":"idm_2"}
+    var search = new URLSearchParams(window.location.search);
+    var params = search.get("identify");
+    var identify = typeof params === "string" ? JSON.parse(params) : params;
+    if (identify) {
+      if (identify.idmType === "idm_3") {
+        sensors.bind(identify.fieldName, identify.fieldValue)
+      } else {
+        sensors.identify(identify.fieldValue)
+      }
+    } else {
+      console.log("---identify参数不存在！")
+    }
+  
+    //跨域打通：part_url 配置多域名后，会在神策分析环境中实现用户统一
+  	sensors.use('SiteLinker',
+    	{
+			linker: [
+      			{part_url: 'sensorsdata.tw', after_hash: false},
+      			{part_url: 'ma.data-di.com', after_hash: false}
+    		],
+			 // 该配置设置为 true 后，如果从已登录的页面跳转过来，即使当前网页已经登录，当前网页仍然会以之前网页的登录 id 再次登录。
+		 	 re_login: true
+		}
+  	);
+    sensors.quick("autoTrack");
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Webpage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Space between images */
+            margin-bottom: 20px; /* Space below the images */
+        }
+        .image-container img {
+            width: 30%; /* Set the width to 200 pixels */
+            height: auto; /* The height will adjust automatically to maintain the aspect ratio */
+            border-radius: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>This is MR.Analyst MA</h1>
+        <p>This is a basic HTML page with some CSS and JavaScript.</p>
+        <div class="image-container">
+          <img src="死亡之握.jpeg" alt="First Image">
+          <img src="再笑阿.jpeg" alt="Second Image">
+        </div>
+        <button id="myButton">握手！</button>
+    </div>
+    <script>
+        document.getElementById('myButton').addEventListener('click', function() {
+            alert('Button was clicked!');
+        });
+    </script>
+</body>
+</html>
