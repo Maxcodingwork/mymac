@@ -1,57 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/sa-sdk-javascript@1.26.5"></script>
-<script>
-    var sensors = window['sensorsDataAnalytic201505'];
-    sensors.init({
-      show_log: true,
-      // server_url: 'https://datasink.sensorsdata.tw/sa?project=id_3', // sensorsdata.tw 环境
-      //server_url: 'https://cdp.data-di.com/sa?project=default',// ma.data-di.com 环境
-      // server_url: 'https://cdp.data-di.com/sa?project=taibei_uat',// ma.data-di.com 环境
-      //server_url: 'https://cdp.data-di.com/sa?project=nanshanlife_poc',// ma.data-di.com 环境
-      server_url: 'https://cdp.data-di.com/sa.gif?project=idm3_test',// ma.data-di.com 环境
-      // 单页面配置，默认开启，若页面中有锚点设计，需要将该配置删除，否则触发锚点会多触发 $pageview 事件
-      is_track_single_page: false,
-      use_client_time: true,
-      send_type: 'beacon',
-      heatmap: {
-        //是否开启点击图，default 表示开启，自动采集 $WebClick 事件，可以设置 'not_collect' 表示关闭。
-        clickmap: 'default',
-        //是否开启触达注意力图，not_collect 表示关闭，不会自动采集 $WebStay 事件，可以设置 'default' 表示开启。
-        scroll_notice_map: 'not_collect'
-      }
-    });
-    // 鍛鍊追蹤：https://ma.data-di.com/shopping/shopping?identify={"fieldName":"$identity_xxxx","fieldValue":"tom","idmType":"idm_2"}
-    var search = new URLSearchParams(window.location.search);
-    var params = search.get("identify");
-    var identify = typeof params === "string" ? JSON.parse(params) : params;
-    if (identify) {
-      if (identify.idmType === "idm_3") {
-        sensors.bind(identify.fieldName, identify.fieldValue)
-      } else {
-        sensors.identify(identify.fieldValue)
-      }
-    } else {
-      console.log("---identify参数不存在！")
-    }
-  
-    //跨域打通：part_url 配置多域名后，会在神策分析环境中实现用户统一
-  	sensors.use('SiteLinker',
-    	{
-			linker: [
-      			{part_url: 'sensorsdata.tw', after_hash: false},
-      			{part_url: 'ma.data-di.com', after_hash: false}
-    		],
-			 // 该配置设置为 true 后，如果从已登录的页面跳转过来，即使当前网页已经登录，当前网页仍然会以之前网页的登录 id 再次登录。
-		 	 re_login: true
-		}
-  	);
-    sensors.quick("autoTrack");
-  </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Webpage</title>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TSDGXJS');</script>
+  <!-- End Google Tag Manager -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -96,6 +55,10 @@
     </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TSDGXJS"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
     <div class="container">
         <h1>This is MR.Analyst MA</h1>
         <p>This is a basic HTML page with some CSS and JavaScript.</p>
