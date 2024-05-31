@@ -1,16 +1,11 @@
-var myImage = document.querySelector("img");
-myImage.onclick = function () {
-    let mySrc = myImage.getAttribute("src");
-    if (mySrc === "死亡之握.jpeg") {
-      myImage.setAttribute("src", "雞哥.jpeg");
-    } else {
-      myImage.setAttribute("src", "死亡之握.jpeg");
-    }
-  };
-
 var allImages = document.querySelectorAll("img");
-allImages.forEach(function(img, index) {
-    console.log("Image " + index, img); // 這會輸出所有的 <img> 元素
+allImages.forEach(function(img) {
+    img.onclick = function () {
+        let mySrc = img.getAttribute("src");
+        let altSrc = img.getAttribute("data-alt-src");
+        img.setAttribute("src", altSrc);
+        img.setAttribute("data-alt-src", mySrc);
+    };
 });
 
 document.getElementById('myButton').addEventListener('click', function() {
