@@ -9,7 +9,6 @@ allImages.forEach(function(img) {
         img.setAttribute("data-alt-src", mySrc);
         img.setAttribute("alt", altAlt);
         img.setAttribute("data-alt-alt", myAlt);
-        )
     };
 });
 
