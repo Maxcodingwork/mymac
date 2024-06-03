@@ -12,7 +12,8 @@ allImages.forEach(function(img) {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
             event: 'changeimage',
-            imageclick: myAlt
+            imageclick: myAlt,
+            imageshow: altAlt
         });
     };
 });
