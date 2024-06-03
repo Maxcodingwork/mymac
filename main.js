@@ -13,6 +13,7 @@ allImages.forEach(function(img) {
         window.dataLayer.push({
             event: 'changeimage',
             imageclick: myAlt
+        });
     };
 });
 
